@@ -1,0 +1,27 @@
+{
+    // 使用 IntelliSense 了解相关属性。
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "cwd": "${workspaceFolder}",
+            "executable": "./build/gpio_toggle_output_LP_MSPM0G3507_nortos_keil/G3507_StepMotor_Driver.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "runToEntryPoint": "main",
+            "servertype": "jlink",
+            "device": "MSPM0G3507",
+            "interface": "swd",
+            "svdPath": ".pack/TexasInstruments/MSPM0G_DFP.1.2.1/03_SVD/MSPM0G350X.svd",
+            "breakAfterReset": false,
+            "preLaunchTask": "",
+            "liveWatch": {
+                "enabled": true,
+                "samplingInterval": 250,
+                "graph": true
+            }
+        }
+    ]
+}

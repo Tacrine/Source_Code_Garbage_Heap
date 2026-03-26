@@ -1,0 +1,91 @@
+# 已构建的二进制文件和库
+*.o
+*.obj
+*.out
+*.hex
+*.bin
+*.axf
+*.elf
+*.map
+*.lst
+*.lnp
+*.tra
+*.ufp
+
+# 调试符号
+*.dbg
+*.sym
+*.dSYM/
+*.pdb
+
+# IDE特定文件
+## Keil/UVision
+*.uvoptx
+*.uvgui*
+*.uvprojx
+*.htm
+*.dep
+RTE/
+Objects/
+Listings/
+
+## IAR
+*.eww
+*.ewp
+*.ewd
+*.bak
+*.ewt
+*.icf
+*.idb
+*.ddt
+*.jdebug
+
+## Eclipse/CDT
+.metadata/
+*.launch
+*.swm
+DebugConf/
+.cproject
+.project
+.settings/
+
+## Visual Studio Code
+.vscode/settings.json
+.vscode/tasks.json
+.vscode/launch.json
+
+# 编译器特定
+## GCC
+*.gcno
+*.gcda
+*.stackdump
+
+## ARM编译器
+*.a
+*.lib
+*.swp
+*.swo
+
+# CMSIS Pack相关
+*.pack
+.PackIndex/
+
+# 临时文件
+*.tmp
+*~
+.DS_Store
+Thumbs.db
+
+# 日志文件
+*.log
+*.txt
+
+# 依赖缓存
+.clangd/
+.cache/
+
+# 用户配置文件
+*.ini
+
+# G3507_PCNT_Demo子目录的特定忽略规则
+G3507_PCNT_Demo/.gitignore
