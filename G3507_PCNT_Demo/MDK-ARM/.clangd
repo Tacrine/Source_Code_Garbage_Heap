@@ -1,0 +1,38 @@
+CompileFlags:
+  Add:
+    - -IC:\Users\Administrator\.eide\tools\armclang_v6_cracked\include
+    - -IC:\Users\Administrator\.eide\tools\armclang_v6_cracked\include\libcxx
+    - -IF:\TI\mspm0_sdk_2_09_00_01\source
+    - -I.cmsis/include
+    - -IRTE/_gpio_toggle_output_LP_MSPM0G3507_nortos_keil
+    - -Ie:/Downloads/TMC2209_StepMotor_Driver
+    - -I..
+    - -D__MSPM0G3507__
+    - -mcpu=cortex-m0plus
+    - -mlittle-endian
+    - -D__MICROLIB
+    - -O2
+    - -flto
+    - -ffunction-sections
+    - -funsigned-char
+    - -fshort-enums
+    - -fshort-wchar
+    - -fno-rtti
+    - -Wno-packed
+    - -Wno-missing-variable-declarations
+    - -Wno-missing-prototypes
+    - -Wno-missing-noreturn
+    - -Wno-sign-conversion
+    - -Wno-nonportable-include-path
+    - -Wno-reserved-id-macro
+    - -Wno-unused-macros
+    - -Wno-documentation-unknown-command
+    - -Wno-documentation
+    - -Wno-license-management
+    - -Wno-parentheses-equality
+    - -Wno-covered-switch-default
+    - -Wno-unreachable-code-break
+    - -g
+  Remove: []
+CompilationDatabase: .\\build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil\\
+Compiler: C:\\Users\\Administrator\\.eide\\tools\\armclang_v6_cracked\\bin\\armclang.exe

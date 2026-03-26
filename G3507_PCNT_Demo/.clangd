@@ -1,0 +1,7 @@
+CompileFlags:
+  Add:
+    - -IC:\Users\Administrator\.eide\tools\armclang_v6_cracked/include
+    - -IC:\Users\Administrator\.eide\tools\armclang_v6_cracked/include/libcxx
+  Remove: []
+  CompilationDatabase: ./build/gpio_toggle_output_LP_MSPM0G3507_nortos_keil
+  Compiler: C:\Users\Administrator\.eide\tools\armclang_v6_cracked\bin\armclang.exe
