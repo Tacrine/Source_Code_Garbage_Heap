@@ -20,39 +20,12 @@
 
 # IDE特定文件
 ## Keil/UVision
-*.uvoptx
 *.uvgui*
-*.uvprojx
 *.htm
 *.dep
 RTE/
 Objects/
 Listings/
-
-## IAR
-*.eww
-*.ewp
-*.ewd
-*.bak
-*.ewt
-*.icf
-*.idb
-*.ddt
-*.jdebug
-
-## Eclipse/CDT
-.metadata/
-*.launch
-*.swm
-DebugConf/
-.cproject
-.project
-.settings/
-
-## Visual Studio Code
-.vscode/settings.json
-.vscode/tasks.json
-.vscode/launch.json
 
 # 编译器特定
 ## GCC
@@ -66,9 +39,7 @@ DebugConf/
 *.swp
 *.swo
 
-# CMSIS Pack相关
-*.pack
-.PackIndex/
+
 
 # 临时文件
 *.tmp
@@ -85,7 +56,6 @@ Thumbs.db
 .cache/
 
 # 用户配置文件
-*.ini
 *.clangd
 
 # 构建输出目录
