@@ -86,6 +86,8 @@ Thumbs.db
 
 # 用户配置文件
 *.ini
+*.clangd
 
-# G3507_PCNT_Demo子目录的特定忽略规则
-G3507_PCNT_Demo/.gitignore
+# 子目录的特定忽略规则
+./.gitignore
+./build/
