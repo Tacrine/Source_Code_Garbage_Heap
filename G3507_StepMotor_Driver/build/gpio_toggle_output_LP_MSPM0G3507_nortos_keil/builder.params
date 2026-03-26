@@ -1,0 +1,112 @@
+{
+    "name": "G3507_StepMotor_Driver",
+    "target": "gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+    "toolchain": "AC6",
+    "toolchainLocation": "C:\\Users\\Administrator\\.eide\\tools\\armclang_v6_cracked",
+    "toolchainCfgFile": "d:\\Program Files\\Microsoft Visual Studio\\Code\\extension\\cl.eide-3.26.5\\res\\data\\models/arm.v6.model.json",
+    "buildMode": "fast|multhread",
+    "showRepathOnLog": true,
+    "threadNum": 32,
+    "rootDir": "d:\\Documents\\EmbbedIDE\\MSPM0G3507\\G3507_StepMotor_Driver",
+    "dumpPath": "build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+    "outDir": "build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+    "incDirs": [
+        ".",
+        "Source/Inc",
+        ".cmsis/include",
+        "MDK-ARM",
+        "f:/TI/mspm0_sdk_2_09_00_01/source",
+        "Source/Src"
+    ],
+    "libDirs": [],
+    "defines": [
+        "__MSPM0G3507__"
+    ],
+    "sourceList": [
+        "MDK-ARM/driverlib.a",
+        "MDK-ARM/startup_mspm0g350x_uvision.s",
+        "Source/Src/PWM_Handler.c",
+        "Source/Src/Tac_Delay.c",
+        "Source/Src/Tac_TMC2209_StepMotor_Driver.c",
+        "Source/Src/main.c",
+        "ti_msp_dl_config.c"
+    ],
+    "alwaysInBuildSources": [],
+    "sourceParams": {},
+    "options": {
+        "version": 3,
+        "afterBuildTasks": [
+            {
+                "name": "axf to elf",
+                "command": "axf2elf -d \"${ToolchainRoot}\" -i \"${OutDir}/${ProjectName}.axf\" -o \"${OutDir}/${ProjectName}.elf\" > \"${OutDir}/axf2elf.log\""
+            }
+        ],
+        "asm-compiler": {
+            "$use": "asm-auto"
+        },
+        "beforeBuildTasks": [
+            {
+                "name": "cmd.exe /C \"$P../../../../../../tools/keil/syscfg.bat '$P' gpio_toggle_output.syscfg\"",
+                "abortAfterFailed": true,
+                "command": "cd .\\MDK-ARM && cmd.exe /C \"$P../../../../../../tools/keil/syscfg.bat '$P' gpio_toggle_output.syscfg\"",
+                "disable": true,
+                "stopBuildAfterFailed": true
+            }
+        ],
+        "c/cpp-compiler": {
+            "language-c": "c99",
+            "language-cpp": "c++11",
+            "link-time-optimization": true,
+            "one-elf-section-per-function": true,
+            "optimization": "level-0",
+            "short-enums#wchar": true,
+            "warnings": "misra-compatible"
+        },
+        "global": {
+            "output-debug-info": "enable",
+            "use-microLIB": true,
+            "microcontroller-cpu": "cortex-m0+",
+            "microcontroller-fpu": "cortex-m0+",
+            "microcontroller-float": "cortex-m0+",
+            "$arch-extensions": "",
+            "$clang-arch-extensions": "",
+            "$armlink-arch-extensions": ""
+        },
+        "linker": {
+            "$outputTaskExcludes": [
+                ".bin"
+            ],
+            "misc-controls": "--diag_suppress=L6329",
+            "output-format": "elf",
+            "link-time-optimization": true,
+            "link-scatter": [
+                "D:/Documents/EmbbedIDE/MSPM0G3507/G3507_StepMotor_Driver/MDK-ARM/mspm0g3507.sct"
+            ]
+        }
+    },
+    "env": {
+        "workspaceFolder": "d:\\Documents\\EmbbedIDE\\MSPM0G3507\\G3507_StepMotor_Driver",
+        "workspaceFolderBasename": "G3507_StepMotor_Driver",
+        "OutDir": "d:\\Documents\\EmbbedIDE\\MSPM0G3507\\G3507_StepMotor_Driver\\build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+        "OutDirRoot": "build",
+        "OutDirBase": "build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+        "ProjectName": "G3507_StepMotor_Driver",
+        "ConfigName": "gpio_toggle_output_LP_MSPM0G3507_nortos_keil",
+        "ProjectRoot": "d:\\Documents\\EmbbedIDE\\MSPM0G3507\\G3507_StepMotor_Driver",
+        "ExecutableName": "d:\\Documents\\EmbbedIDE\\MSPM0G3507\\G3507_StepMotor_Driver\\build\\gpio_toggle_output_LP_MSPM0G3507_nortos_keil\\G3507_StepMotor_Driver",
+        "ChipPackDir": ".pack/TexasInstruments/MSPM0G_DFP.1.2.1",
+        "ChipName": "MSPM0G3507",
+        "SYS_Platform": "win32",
+        "SYS_DirSep": "\\",
+        "SYS_DirSeparator": "\\",
+        "SYS_PathSep": ";",
+        "SYS_PathSeparator": ";",
+        "SYS_EOL": "\r\n",
+        "EIDE_BUILDER_DIR": "d:\\Program Files\\Microsoft Visual Studio\\Code\\extension\\cl.eide-3.26.5\\res\\tools\\win32\\unify_builder",
+        "EIDE_BINARIES_VER": "12.1.1",
+        "EIDE_MSYS": "C:\\Users\\Administrator\\.eide\\bin\\builder\\msys\\bin",
+        "EIDE_PY3_CMD": "C:\\Users\\Administrator\\.eide\\bin\\python36\\python3.exe",
+        "ToolchainRoot": "C:\\Users\\Administrator\\.eide\\tools\\armclang_v6_cracked"
+    },
+    "sysPaths": []
+}

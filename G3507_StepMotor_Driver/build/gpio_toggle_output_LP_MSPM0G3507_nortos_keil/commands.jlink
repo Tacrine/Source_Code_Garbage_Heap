@@ -1,0 +1,6 @@
+r
+halt
+loadfile "d:\Documents\EmbbedIDE\MSPM0G3507\G3507_StepMotor_Driver\build\gpio_toggle_output_LP_MSPM0G3507_nortos_keil\G3507_StepMotor_Driver.hex"
+r
+go
+exit
