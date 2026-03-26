@@ -34,7 +34,7 @@
 #include "Tac_Delay.h"
 #include "PWM_Handler.h"
 
-uint32_t out = 10000;
+//uint32_t out = 10000;
 
 int main(void)
 {
@@ -45,17 +45,21 @@ int main(void)
     NVIC_EnableIRQ(PWM_0_INST_INT_IRQN);
     NVIC_EnableIRQ(CAPTURE_0_INST_INT_IRQN);
 
-    DL_TimerG_startCounter(PWM_0_INST);
-    DL_TimerA_startCounter(CAPTURE_0_INST);
+    DL_TimerA_startCounter(PWM_0_INST);
+    DL_TimerG_startCounter(CAPTURE_0_INST);
 
     // 设置目标脉冲数为 9, + 1是为了校准
-    Set_Target_Pulse(5 + 1);
+    Set_Target_Pulse(5 - 2);
 
     // 设置 PWM 频率为 10kHz
-    Set_PWM_Frequency(1000);
+    Set_PWM_Frequency(100000);  //单位（Hz）
+
+    Delay_ms(1);
 
     // 获取当前频率
     volatile uint32_t currentFreq = Get_PWM_Frequency();
+
+    
 
     while (1)
     {

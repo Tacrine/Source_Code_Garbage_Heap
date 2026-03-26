@@ -38,7 +38,7 @@
                             }
                         }
 
-        _TMC_TIMER_模式：直接使用定时器来产生脉冲，STM32需要配置主从定时器。
+        _TMC_TIMER_模式：直接使用定时器来产生脉冲，STM32需要配置主从定时器，MSPM0G3507需要配置事件与中断。详细见工程内的示例工程。
 */
 
 #ifndef _Tac_TMC2209_StepMotor_Driver_h_
@@ -55,6 +55,7 @@
 #include "ti_msp_dl_config.h"
 
 // TI G3507的时钟以及定时器配置结构体
+#ifdef _TMC_GPIO_
 typedef struct
 {
     DL_TIMER_CLOCK clockSel;
@@ -62,7 +63,16 @@ typedef struct
     uint8_t prescale;
     uint32_t period;
 } DL_Tac_StepMotor_TimerConfig;
-
+#endif
+#ifdef _TMC_TIMER_
+typedef struct
+{
+    DL_TIMER_CLOCK clockSel;
+    DL_TIMER_CLOCK_DIVIDE divideRatio;
+    uint8_t prescale;
+    uint32_t period;
+} DL_Tac_StepMotor_TimerConfig;
+#endif
 // 步进电机参数定义
 typedef struct
 {
@@ -86,7 +96,12 @@ typedef struct
     unsigned char Dir;     // 方向,T为顺时针，F为逆时针(从电机运动轴的上面看)
     unsigned char Lock;    // 锁定状态，T为锁定，F为未锁定
 
+    #ifdef _TMC_GPIO_
     DL_Tac_StepMotor_TimerConfig *timer_config; // 定时器配置结构体
+    #endif
+    #ifdef _TMC_TIMER_
+
+    #endif
     uint16_t Freq;                              // 脉冲频率(Hz)
     unsigned char SQW_Generator_En;             // 脉冲输出使能
     uint32_t ticks;                             // 定时器时刻，用以计算脉冲周期

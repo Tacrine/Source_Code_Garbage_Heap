@@ -40,7 +40,7 @@
 
 #include "ti_msp_dl_config.h"
 
-DL_TimerA_backupConfig gCAPTURE_0Backup;
+DL_TimerA_backupConfig gPWM_0Backup;
 
 /*
  *  ======== SYSCFG_DL_init ========
@@ -55,8 +55,8 @@ SYSCONFIG_WEAK void SYSCFG_DL_init(void)
     SYSCFG_DL_PWM_0_init();
     SYSCFG_DL_CAPTURE_0_init();
     /* Ensure backup structures have no valid state */
+	gPWM_0Backup.backupRdy 	= false;
 
-	gCAPTURE_0Backup.backupRdy 	= false;
 
 }
 /*
@@ -67,7 +67,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_saveConfiguration(void)
 {
     bool retStatus = true;
 
-	retStatus &= DL_TimerA_saveConfiguration(CAPTURE_0_INST, &gCAPTURE_0Backup);
+	retStatus &= DL_TimerA_saveConfiguration(PWM_0_INST, &gPWM_0Backup);
 
     return retStatus;
 }
@@ -77,7 +77,7 @@ SYSCONFIG_WEAK bool SYSCFG_DL_restoreConfiguration(void)
 {
     bool retStatus = true;
 
-	retStatus &= DL_TimerA_restoreConfiguration(CAPTURE_0_INST, &gCAPTURE_0Backup, false);
+	retStatus &= DL_TimerA_restoreConfiguration(PWM_0_INST, &gPWM_0Backup, false);
 
     return retStatus;
 }
@@ -86,13 +86,13 @@ SYSCONFIG_WEAK void SYSCFG_DL_initPower(void)
 {
     DL_GPIO_reset(GPIOA);
     DL_GPIO_reset(GPIOB);
-    DL_TimerG_reset(PWM_0_INST);
-    DL_TimerA_reset(CAPTURE_0_INST);
+    DL_TimerA_reset(PWM_0_INST);
+    DL_TimerG_reset(CAPTURE_0_INST);
 
     DL_GPIO_enablePower(GPIOA);
     DL_GPIO_enablePower(GPIOB);
-    DL_TimerG_enablePower(PWM_0_INST);
-    DL_TimerA_enablePower(CAPTURE_0_INST);
+    DL_TimerA_enablePower(PWM_0_INST);
+    DL_TimerG_enablePower(CAPTURE_0_INST);
     delay_cycles(POWER_STARTUP_DELAY);
 }
 
@@ -101,11 +101,6 @@ SYSCONFIG_WEAK void SYSCFG_DL_GPIO_init(void)
 
     DL_GPIO_initPeripheralOutputFunction(GPIO_PWM_0_C0_IOMUX,GPIO_PWM_0_C0_IOMUX_FUNC);
     DL_GPIO_enableOutput(GPIO_PWM_0_C0_PORT, GPIO_PWM_0_C0_PIN);
-
-    DL_GPIO_initDigitalOutput(GPIO_GRP_0_PIN_0_IOMUX);
-
-    DL_GPIO_clearPins(GPIO_GRP_0_PORT, GPIO_GRP_0_PIN_0_PIN);
-    DL_GPIO_enableOutput(GPIO_GRP_0_PORT, GPIO_GRP_0_PIN_0_PIN);
 
 }
 
@@ -131,45 +126,45 @@ SYSCONFIG_WEAK void SYSCFG_DL_SYSCTL_init(void)
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
  *   2000000 Hz = 4000000 Hz / (8 * (1 + 1))
  */
-static const DL_TimerG_ClockConfig gPWM_0ClockConfig = {
+static const DL_TimerA_ClockConfig gPWM_0ClockConfig = {
     .clockSel = DL_TIMER_CLOCK_BUSCLK,
     .divideRatio = DL_TIMER_CLOCK_DIVIDE_8,
     .prescale = 1U
 };
 
-static const DL_TimerG_PWMConfig gPWM_0Config = {
-    .pwmMode = DL_TIMER_PWM_MODE_EDGE_ALIGN_UP,
-    .period = 400,
+static const DL_TimerA_PWMConfig gPWM_0Config = {
+    .pwmMode = DL_TIMER_PWM_MODE_CENTER_ALIGN,
+    .period = 200,
     .isTimerWithFourCC = true,
     .startTimer = DL_TIMER_STOP,
 };
 
 SYSCONFIG_WEAK void SYSCFG_DL_PWM_0_init(void) {
 
-    DL_TimerG_setClockConfig(
-        PWM_0_INST, (DL_TimerG_ClockConfig *) &gPWM_0ClockConfig);
+    DL_TimerA_setClockConfig(
+        PWM_0_INST, (DL_TimerA_ClockConfig *) &gPWM_0ClockConfig);
 
-    DL_TimerG_initPWMMode(
-        PWM_0_INST, (DL_TimerG_PWMConfig *) &gPWM_0Config);
+    DL_TimerA_initPWMMode(
+        PWM_0_INST, (DL_TimerA_PWMConfig *) &gPWM_0Config);
 
     // Set Counter control to the smallest CC index being used
-    DL_TimerG_setCounterControl(PWM_0_INST,DL_TIMER_CZC_CCCTL0_ZCOND,DL_TIMER_CAC_CCCTL0_ACOND,DL_TIMER_CLC_CCCTL0_LCOND);
+    DL_TimerA_setCounterControl(PWM_0_INST,DL_TIMER_CZC_CCCTL0_ZCOND,DL_TIMER_CAC_CCCTL0_ACOND,DL_TIMER_CLC_CCCTL0_LCOND);
 
-    DL_TimerG_setCaptureCompareOutCtl(PWM_0_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
+    DL_TimerA_setCaptureCompareOutCtl(PWM_0_INST, DL_TIMER_CC_OCTL_INIT_VAL_LOW,
 		DL_TIMER_CC_OCTL_INV_OUT_DISABLED, DL_TIMER_CC_OCTL_SRC_FUNCVAL,
-		DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
+		DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
 
-    DL_TimerG_setCaptCompUpdateMethod(PWM_0_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERG_CAPTURE_COMPARE_0_INDEX);
-    DL_TimerG_setCaptureCompareValue(PWM_0_INST, 200, DL_TIMER_CC_0_INDEX);
+    DL_TimerA_setCaptCompUpdateMethod(PWM_0_INST, DL_TIMER_CC_UPDATE_METHOD_IMMEDIATE, DL_TIMERA_CAPTURE_COMPARE_0_INDEX);
+    DL_TimerA_setCaptureCompareValue(PWM_0_INST, 50, DL_TIMER_CC_0_INDEX);
 
-    DL_TimerG_enableClock(PWM_0_INST);
-    DL_TimerG_enableEvent(PWM_0_INST, DL_TIMERG_EVENT_ROUTE_1, (DL_TIMERG_EVENT_ZERO_EVENT));
+    DL_TimerA_enableClock(PWM_0_INST);
+    DL_TimerA_enableEvent(PWM_0_INST, DL_TIMERA_EVENT_ROUTE_1, (DL_TIMERA_EVENT_ZERO_EVENT));
 
-    DL_TimerG_setPublisherChanID(PWM_0_INST, DL_TIMERG_PUBLISHER_INDEX_0, PWM_0_INST_PUB_0_CH);
+    DL_TimerA_setPublisherChanID(PWM_0_INST, DL_TIMERA_PUBLISHER_INDEX_0, PWM_0_INST_PUB_0_CH);
 
 
     
-    DL_TimerG_setCCPDirection(PWM_0_INST , DL_TIMER_CC0_OUTPUT );
+    DL_TimerA_setCCPDirection(PWM_0_INST , DL_TIMER_CC0_OUTPUT );
 
 
 }
@@ -181,7 +176,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_PWM_0_init(void) {
  * timerClkFreq = (timerClkSrc / (timerClkDivRatio * (timerClkPrescale + 1)))
  *   32000000 Hz = 32000000 Hz / (1 * (0 + 1))
  */
-static const DL_TimerA_ClockConfig gCAPTURE_0ClockConfig = {
+static const DL_TimerG_ClockConfig gCAPTURE_0ClockConfig = {
     .clockSel    = DL_TIMER_CLOCK_BUSCLK,
     .divideRatio = DL_TIMER_CLOCK_DIVIDE_1,
     .prescale = 0U
@@ -191,7 +186,7 @@ static const DL_TimerA_ClockConfig gCAPTURE_0ClockConfig = {
  * Timer load value (where the counter starts from) is calculated as (timerPeriod * timerClockFreq) - 1
  * CAPTURE_0_INST_LOAD_VALUE = (0 ms * 32000000 Hz) - 1
  */
-static const DL_TimerA_CaptureTriggerConfig gCAPTURE_0CaptureConfig = {
+static const DL_TimerG_CaptureTriggerConfig gCAPTURE_0CaptureConfig = {
     .captureMode    = DL_TIMER_CAPTURE_MODE_EDGE_TIME,
     .period         = CAPTURE_0_INST_LOAD_VALUE,
     .startTimer     = DL_TIMER_STOP,
@@ -199,23 +194,23 @@ static const DL_TimerA_CaptureTriggerConfig gCAPTURE_0CaptureConfig = {
 
 SYSCONFIG_WEAK void SYSCFG_DL_CAPTURE_0_init(void) {
 
-    DL_TimerA_setClockConfig(CAPTURE_0_INST,
-        (DL_TimerA_ClockConfig *) &gCAPTURE_0ClockConfig);
+    DL_TimerG_setClockConfig(CAPTURE_0_INST,
+        (DL_TimerG_ClockConfig *) &gCAPTURE_0ClockConfig);
 
-    DL_TimerA_initCaptureTriggerMode(CAPTURE_0_INST,
-        (DL_TimerA_CaptureTriggerConfig *) &gCAPTURE_0CaptureConfig);
-    DL_TimerA_enableInterrupt(CAPTURE_0_INST , DL_TIMERA_INTERRUPT_CC0_DN_EVENT |
-		DL_TIMERA_INTERRUPT_CC0_UP_EVENT);
+    DL_TimerG_initCaptureTriggerMode(CAPTURE_0_INST,
+        (DL_TimerG_CaptureTriggerConfig *) &gCAPTURE_0CaptureConfig);
+    DL_TimerG_enableInterrupt(CAPTURE_0_INST , DL_TIMERG_INTERRUPT_CC0_DN_EVENT |
+		DL_TIMERG_INTERRUPT_CC0_UP_EVENT);
 
     NVIC_SetPriority(CAPTURE_0_INST_INT_IRQN, 0);
-    DL_TimerA_enableClock(CAPTURE_0_INST);
+    DL_TimerG_enableClock(CAPTURE_0_INST);
 
-    DL_TimerA_setExternalTriggerEvent(CAPTURE_0_INST,
+    DL_TimerG_setExternalTriggerEvent(CAPTURE_0_INST,
         DL_TIMER_EXT_TRIG_SEL_TRIG_SUB_0);
 
-    DL_TimerA_enableExternalTrigger(CAPTURE_0_INST);
+    DL_TimerG_enableExternalTrigger(CAPTURE_0_INST);
 
-    DL_TimerA_setSubscriberChanID(CAPTURE_0_INST,
+    DL_TimerG_setSubscriberChanID(CAPTURE_0_INST,
         DL_TIMER_SUBSCRIBER_INDEX_0, CAPTURE_0_INST_SUB_0_CH);
 }
 

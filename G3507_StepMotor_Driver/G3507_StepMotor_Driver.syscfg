@@ -1,8 +1,8 @@
 /**
  * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
  * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
- * @cliArgs --device "MSPM0G350X" --part "Default" --package "LQFP-64(PM)" --product "mspm0_sdk@2.09.00.00"
- * @v2CliArgs --device "MSPM0G3507" --package "LQFP-64(PM)" --product "mspm0_sdk@2.09.00.00"
+ * @cliArgs --device "MSPM0G350X" --part "Default" --package "LQFP-48(PT)" --product "mspm0_sdk@2.09.00.00"
+ * @v2CliArgs --device "MSPM0G3507" --package "LQFP-48(PT)" --product "mspm0_sdk@2.09.00.00"
  * @versions {"tool":"1.26.2+4477"}
  */
 scripting.excludeFromBuild("device_linker.cmd");
@@ -17,8 +17,6 @@ scripting.excludeFromBuild("Event.dot");
  */
 const CAPTURE  = scripting.addModule("/ti/driverlib/CAPTURE", {}, false);
 const CAPTURE1 = CAPTURE.addInstance();
-const GPIO     = scripting.addModule("/ti/driverlib/GPIO", {}, false);
-const GPIO1    = GPIO.addInstance();
 const PWM      = scripting.addModule("/ti/driverlib/PWM", {}, false);
 const PWM1     = PWM.addInstance();
 const SYSCTL   = scripting.addModule("/ti/driverlib/SYSCTL");
@@ -32,15 +30,14 @@ CAPTURE1.event1ControllerInterruptEn = ["ZERO_EVENT"];
 CAPTURE1.subscriberPort              = "FSUB0";
 CAPTURE1.subscriberChannel           = 1;
 CAPTURE1.interruptPriority           = "0";
-CAPTURE1.interrupts                  = ["CC0_DN"];
+CAPTURE1.interrupts                  = ["CC0_DN","CC0_UP"];
+CAPTURE1.captEdgeDetection           = "EDGE";
+CAPTURE1.peripheral.$assign          = "TIMG0";
 
-const Board = scripting.addModule("/ti/driverlib/Board", {}, false);
-
-GPIO1.$name                               = "GPIO_GRP_0";
-GPIO1.associatedPins[0].$name             = "PIN_0";
-GPIO1.associatedPins[0].interruptEn       = true;
-GPIO1.associatedPins[0].interruptPriority = "0";
-GPIO1.associatedPins[0].polarity          = "RISE_FALL";
+const Board                       = scripting.addModule("/ti/driverlib/Board", {}, false);
+Board.peripheral.$assign          = "DEBUGSS";
+Board.peripheral.swclkPin.$assign = "PA20";
+Board.peripheral.swdioPin.$assign = "PA19";
 
 PWM1.$name                       = "PWM_0";
 PWM1.ccIndex                     = [0];
@@ -50,24 +47,16 @@ PWM1.event1ControllerInterruptEn = ["ZERO_EVENT"];
 PWM1.event1PublisherChannel      = 1;
 PWM1.subscriberChannel           = 2;
 PWM1.counterLoad                 = true;
-PWM1.timerCount                  = 400;
-PWM1.pwmMode                     = "EDGE_ALIGN_UP";
+PWM1.timerCount                  = 200;
+PWM1.pwmMode                     = "CENTER_ALIGN";
 PWM1.PWM_CHANNEL_0.$name         = "ti_driverlib_pwm_PWMTimerCC0";
 PWM1.PWM_CHANNEL_0.dutyCycle     = 50;
 PWM1.ccp0PinConfig.$name         = "ti_driverlib_gpio_GPIOPinGeneric0";
-PWM1.peripheral.ccp0Pin.$assign  = "PA1";
+PWM1.peripheral.$assign          = "TIMA0";
+PWM1.peripheral.ccp0Pin.$assign  = "PA0";
 
 SYSCTL.forceDefaultClkConfig = true;
+SYSCTL.peripheral.$assign    = "SYSCTL";
 
-/**
- * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
- * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
- * re-solve from scratch.
- */
-CAPTURE1.peripheral.$suggestSolution         = "TIMA0";
-Board.peripheral.$suggestSolution            = "DEBUGSS";
-Board.peripheral.swclkPin.$suggestSolution   = "PA20";
-Board.peripheral.swdioPin.$suggestSolution   = "PA19";
-GPIO1.associatedPins[0].pin.$suggestSolution = "PB13";
-PWM1.peripheral.$suggestSolution             = "TIMG8";
-SYSCTL.peripheral.$suggestSolution           = "SYSCTL";
+const ProjectConfig              = scripting.addModule("/ti/project_config/ProjectConfig", {}, false);
+ProjectConfig.migrationCondition = true;

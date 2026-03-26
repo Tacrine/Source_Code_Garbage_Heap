@@ -25,6 +25,7 @@ targets:
     cppPreprocessAttrs:
       defineList:
         - __MSPM0G3507__
+        - _TMC_TIMER_
       incList:
         - .
         - Source/Inc

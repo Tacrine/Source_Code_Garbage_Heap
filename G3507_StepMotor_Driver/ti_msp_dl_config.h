@@ -78,15 +78,15 @@ extern "C" {
 
 
 /* Defines for PWM_0 */
-#define PWM_0_INST                                                         TIMG8
-#define PWM_0_INST_IRQHandler                                   TIMG8_IRQHandler
-#define PWM_0_INST_INT_IRQN                                     (TIMG8_INT_IRQn)
+#define PWM_0_INST                                                         TIMA0
+#define PWM_0_INST_IRQHandler                                   TIMA0_IRQHandler
+#define PWM_0_INST_INT_IRQN                                     (TIMA0_INT_IRQn)
 #define PWM_0_INST_CLK_FREQ                                              2000000
 /* GPIO defines for channel 0 */
 #define GPIO_PWM_0_C0_PORT                                                 GPIOA
-#define GPIO_PWM_0_C0_PIN                                          DL_GPIO_PIN_1
-#define GPIO_PWM_0_C0_IOMUX                                       (IOMUX_PINCM2)
-#define GPIO_PWM_0_C0_IOMUX_FUNC                      IOMUX_PINCM2_PF_TIMG8_CCP0
+#define GPIO_PWM_0_C0_PIN                                          DL_GPIO_PIN_0
+#define GPIO_PWM_0_C0_IOMUX                                       (IOMUX_PINCM1)
+#define GPIO_PWM_0_C0_IOMUX_FUNC                      IOMUX_PINCM1_PF_TIMA0_CCP0
 #define GPIO_PWM_0_C0_IDX                                    DL_TIMER_CC_0_INDEX
 
 /* Publisher defines */
@@ -95,23 +95,15 @@ extern "C" {
 
 
 /* Defines for CAPTURE_0 */
-#define CAPTURE_0_INST                                                   (TIMA0)
-#define CAPTURE_0_INST_IRQHandler                               TIMA0_IRQHandler
-#define CAPTURE_0_INST_INT_IRQN                                 (TIMA0_INT_IRQn)
+#define CAPTURE_0_INST                                                   (TIMG0)
+#define CAPTURE_0_INST_IRQHandler                               TIMG0_IRQHandler
+#define CAPTURE_0_INST_INT_IRQN                                 (TIMG0_INT_IRQn)
 #define CAPTURE_0_INST_LOAD_VALUE                                           (0U)
 #define CAPTURE_0_INST_SUB_0_CH                                              (1)
 
 
 
 
-
-
-/* Port definition for Pin Group GPIO_GRP_0 */
-#define GPIO_GRP_0_PORT                                                  (GPIOB)
-
-/* Defines for PIN_0: GPIOB.13 with pinCMx 30 on package pin 1 */
-#define GPIO_GRP_0_PIN_0_PIN                                    (DL_GPIO_PIN_13)
-#define GPIO_GRP_0_PIN_0_IOMUX                                   (IOMUX_PINCM30)
 
 
 /* clang-format on */
@@ -122,7 +114,6 @@ void SYSCFG_DL_GPIO_init(void);
 void SYSCFG_DL_SYSCTL_init(void);
 void SYSCFG_DL_PWM_0_init(void);
 void SYSCFG_DL_CAPTURE_0_init(void);
-
 
 bool SYSCFG_DL_saveConfiguration(void);
 bool SYSCFG_DL_restoreConfiguration(void);

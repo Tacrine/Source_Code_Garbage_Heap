@@ -25,6 +25,7 @@ void Tac_StepMotor_Init(Tac_StepMotor *motor_struct, DL_Tac_StepMotor_TimerConfi
     motor_struct->SQW_tick_target = 0;
 }
 #endif
+
 #ifdef USE_HAL_DRIVER
 // 这里的GPIO_TypeDef * 是HAL库中的类型
 void Tac_StepMotor_Init(Tac_StepMotor *motor_struct, TIM_HandleTypeDef *htim,
@@ -309,6 +310,7 @@ void SQW_Gen_Stop(Tac_StepMotor *motor_struct)
 
 
 #ifdef __MSPM0G3507__
+#ifdef _TMC_GPIO_
 uint32_t Get_Config_Clock(Tac_StepMotor *motor_struct)
 {
     uint32_t DL_TIMER_CLOCK_BUSCLK = motor_struct->timer_config->clockSel;
@@ -323,6 +325,7 @@ float Get_TIM_Update_Freq(Tac_StepMotor *motor_struct)
     uint32_t period = motor_struct->timer_config->period;
     return period;
 }
+#endif
 
 /// @brief 根据目标频率自动计算所需要的tick数量
 /// @param htim 定时器句柄
@@ -330,12 +333,17 @@ float Get_TIM_Update_Freq(Tac_StepMotor *motor_struct)
 /// @param freq_out 输出的频率
 void SQW_Set_Frequency(Tac_StepMotor *motor_struct, float freq_out)
 {
+    #ifdef _TMC_GPIO_
     float f_int = Get_TIM_Update_Freq(motor_struct);
 
     motor_struct->SQW_tick_target = (uint32_t)(freq_out / f_int);
 
     if (motor_struct->SQW_tick_target < 1)
         motor_struct->SQW_tick_target = 1; // 防止除零
+    #endif
+    #ifdef _TMC_TIMER_
+
+    #endif
 }
 
 /// @brief 计算方波输出的函数，需要将该函数放入中断回调中去

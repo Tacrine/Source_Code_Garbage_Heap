@@ -88,6 +88,13 @@ Thumbs.db
 *.ini
 *.clangd
 
-# 子目录的特定忽略规则
-./.gitignore
-./build/
+# 构建输出目录
+build/
+
+# 排除目录
+excluded/
+
+# 依赖缓存
+.clangd/
+.cache/
+
