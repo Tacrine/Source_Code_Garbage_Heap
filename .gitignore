@@ -20,37 +20,14 @@
 
 # IDE特定文件
 ## Keil/UVision
-
 *.uvgui*
-
 *.htm
 *.dep
 RTE/
 Objects/
 Listings/
 
-## IAR
-*.eww
-*.ewp
-*.ewd
-*.bak
-*.ewt
-*.icf
-*.idb
-*.ddt
-*.jdebug
-
-## Eclipse/CDT
-.metadata/
-*.launch
-*.swm
-DebugConf/
-.cproject
-.project
-.settings/
-
 ## Visual Studio Code
-.vscode/settings.json
 .vscode/tasks.json
 .vscode/launch.json
 
@@ -66,10 +43,6 @@ DebugConf/
 *.swp
 *.swo
 
-# CMSIS Pack相关
-*.pack
-.PackIndex/
-
 # 临时文件
 *.tmp
 *~
@@ -83,9 +56,3 @@ Thumbs.db
 # 依赖缓存
 .clangd/
 .cache/
-
-# 用户配置文件
-*.ini
-
-# G3507_PCNT_Demo子目录的特定忽略规则
-G3507_PCNT_Demo/.gitignore
