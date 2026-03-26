@@ -49,7 +49,7 @@ int main(void)
     DL_TimerG_startCounter(CAPTURE_0_INST);
 
     // 设置目标脉冲数为 9, + 1是为了校准
-    Set_Target_Pulse(5 - 2);
+    Set_Target_Pulse(3 + 1);
 
     // 设置 PWM 频率为 10kHz
     Set_PWM_Frequency(100000);  //单位（Hz）
@@ -59,23 +59,18 @@ int main(void)
     // 获取当前频率
     volatile uint32_t currentFreq = Get_PWM_Frequency();
 
-    
-
     while (1)
     {
-        // static int step = 0;
-        // if(out == 30000)
-        // {
-        //     step = -100;
-        // }
-        // else if(out == 10000)
-        // {
-        //     step = 100;
-        // }
-        // out = step + out;
-        // Delay_ms(1);
-        // DL_TimerG_setCaptureCompareValue(PWM_0_INST, out, DL_TIMER_CC_0_INDEX);
-        // Delay_ms(1);
-        ;;
+        Set_Target_Pulse(1 + 1);
+        Delay_ms(30);
+        Set_Target_Pulse(2 + 1);
+        Delay_ms(30);
+        Set_Target_Pulse(3 + 1);
+        Delay_ms(30);
+        Set_Target_Pulse(4 + 1);
+        Delay_ms(30);
+        Set_Target_Pulse(5 + 1);
+        Delay_ms(30);   
+        while(1); 
     }
 }

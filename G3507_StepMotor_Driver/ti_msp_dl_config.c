@@ -158,7 +158,7 @@ SYSCONFIG_WEAK void SYSCFG_DL_PWM_0_init(void) {
     DL_TimerA_setCaptureCompareValue(PWM_0_INST, 50, DL_TIMER_CC_0_INDEX);
 
     DL_TimerA_enableClock(PWM_0_INST);
-    DL_TimerA_enableEvent(PWM_0_INST, DL_TIMERA_EVENT_ROUTE_1, (DL_TIMERA_EVENT_ZERO_EVENT));
+    DL_TimerA_enableEvent(PWM_0_INST, DL_TIMERA_EVENT_ROUTE_1, (DL_TIMERA_EVENT_CC0_DN_EVENT));
 
     DL_TimerA_setPublisherChanID(PWM_0_INST, DL_TIMERA_PUBLISHER_INDEX_0, PWM_0_INST_PUB_0_CH);
 

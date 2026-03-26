@@ -25,11 +25,11 @@ const SYSCTL   = scripting.addModule("/ti/driverlib/SYSCTL");
  * Write custom configuration values to the imported modules.
  */
 CAPTURE1.$name                       = "CAPTURE_0";
-CAPTURE1.captSelect                  = "Trigger";
 CAPTURE1.event1ControllerInterruptEn = ["ZERO_EVENT"];
 CAPTURE1.subscriberPort              = "FSUB0";
 CAPTURE1.subscriberChannel           = 1;
 CAPTURE1.interruptPriority           = "0";
+CAPTURE1.captSelect                  = "Trigger";
 CAPTURE1.interrupts                  = ["CC0_DN","CC0_UP"];
 CAPTURE1.captEdgeDetection           = "EDGE";
 CAPTURE1.peripheral.$assign          = "TIMG0";
@@ -43,12 +43,11 @@ PWM1.$name                       = "PWM_0";
 PWM1.ccIndex                     = [0];
 PWM1.clockDivider                = 8;
 PWM1.clockPrescale               = 2;
-PWM1.event1ControllerInterruptEn = ["ZERO_EVENT"];
 PWM1.event1PublisherChannel      = 1;
 PWM1.subscriberChannel           = 2;
-PWM1.counterLoad                 = true;
 PWM1.timerCount                  = 200;
 PWM1.pwmMode                     = "CENTER_ALIGN";
+PWM1.event1ControllerInterruptEn = ["CC0_DN_EVENT"];
 PWM1.PWM_CHANNEL_0.$name         = "ti_driverlib_pwm_PWMTimerCC0";
 PWM1.PWM_CHANNEL_0.dutyCycle     = 50;
 PWM1.ccp0PinConfig.$name         = "ti_driverlib_gpio_GPIOPinGeneric0";
